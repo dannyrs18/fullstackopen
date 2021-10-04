@@ -5,40 +5,48 @@ const Header = ({course}) => <h1>{course}</h1>;
 
 const Part = ({part, exercises}) => <p>{part} {exercises}</p>;
 
-const Content = ({class1, class2, class3}) => (
-  <div>
-    <Part part={class1.part} exercises={class1.exercises}/>
-    <Part part={class2.part} exercises={class2.exercises}/>
-    <Part part={class3.part} exercises={class3.exercises}/>
-  </div>
-);
+const Content = ({parts}) => {
+  const [ part1, part2, part3 ] = parts;
+  return (
+    <div>
+      <Part part={part1.name} exercises={part1.exercises}/>
+      <Part part={part2.name} exercises={part2.exercises}/>
+      <Part part={part3.name} exercises={part3.exercises}/>
+    </div>
+  );
+};
 
-const Total = ({exercises1, exercises2, exercises3}) => (
-  <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
-);
+const Total = ({parts}) => {
+  const [{exercises: exercises1}, {exercises: exercises2}, {exercises: exercises3}] = parts;
+  return (
+    <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+  );
+}
 
 const App = () => {
-  const course = 'Half Stack application development';
-  const part1 = 'Fundamentals of React';
-  const exercises1 = 10;
-  const part2 = 'Using props to pass data';
-  const exercises2 = 7;
-  const part3 = 'State of a component';
-  const exercises3 = 14;
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
+  }
 
   return (
     <div>
-      <Header course={course}/>
-      <Content
-        class1={{part: part1, exercises: exercises1}}
-        class2={{part: part2, exercises: exercises2}}
-        class3={{part: part3, exercises: exercises3}}
-      />
-      <Total
-        exercises1={exercises1}
-        exercises2={exercises2}
-        exercises3={exercises3}
-      />
+      <Header course={course.name}/>
+      <Content parts={course.parts} />
+      <Total parts={course.parts} />
     </div>
   )
 };
